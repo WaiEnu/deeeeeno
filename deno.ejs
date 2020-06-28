@@ -1,0 +1,59 @@
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/style.css">
+  <title><%= data.msg %></title> 
+</head>
+<body>
+<div class="wrap">
+  <h1 id="time"></h1>
+  <div class="box">
+    <img src="/deno.svg" alt="deno" id="deno" />
+    <h3><span id="greeting">Hello, </span>Deno</h3>
+  </div>
+</div>
+<script>
+const time = document.getElementById('time'),
+  greeting = document.getElementById('greeting');
+// Show Time
+function showTime() {
+  let today = new Date(),
+    hour = today.getHours(),
+    min = today.getMinutes(),
+    sec = today.getSeconds();
+  // Set AM or PM
+  const amPm = hour >= 12 ? 'PM' : 'AM';
+  // 12hr Format
+  hour = hour % 12 || 12;
+  // Output Time
+  time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)} ${amPm}`;
+  setTimeout(showTime, 1000);
+}
+// Add Zeros
+function addZero(n) {
+  return (parseInt(n, 10) < 10 ? '0' : '') + n;
+}
+// Set Background and Greeting
+function setBgGreet() {
+  let today = new Date(),
+    hour = today.getHours();
+  if (hour < 12) {
+    // Morning
+    document.body.style.backgroundImage = "linear-gradient(135deg, rgba(12,175,224,1) 35%, rgba(207,225,229,1) 100%)";
+    greeting.textContent = 'Good Morning, ';
+  } else if (hour < 18) {
+    // Afternoon
+    document.body.style.background = "linear-gradient(135deg, rgba(8,162,241,1) 35%, rgba(193,229,232,1) 100%)";
+    greeting.textContent = 'Good Afternoon, ';
+  } else {
+    // Evening
+    document.body.style.backgroundImage = "linear-gradient(135deg, rgba(15,2,77,1) 58%, rgba(12,42,221,1) 100%)";
+    greeting.textContent = 'Good Evening, ';
+    document.body.style.color = 'white';
+  }
+}
+showTime();
+setBgGreet();
+</script>
+</body>
+</html>
